@@ -1,7 +1,6 @@
 {
     "lp_contract": "CurveTokenV1",
     "wrapped_contract": "renERC20",
-    "swap_address": "",
     "lp_token_address": "0x49849C98ae39Fff122806C06791Fa73784FB3675",
     "gauge_addresses": ["0xB1F2cdeC61db658F091671F5f199635aEF202CAC"],
     "lp_constructor": {
