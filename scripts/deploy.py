@@ -1,33 +1,31 @@
 import json
 
 from brownie import accounts
-from brownie.network.gas.strategies import GasNowScalingStrategy
 from brownie.project import load as load_project
 from brownie.project.main import get_loaded_projects
 
 # set a throwaway admin account here
-DEPLOYER = accounts.add()
+DEPLOYER = accounts.add(config["wallets"]["from_key"])
 REQUIRED_CONFIRMATIONS = 1
 
 # deployment settings
 # most settings are taken from `contracts/pools/{POOL_NAME}/pooldata.json`
-POOL_NAME = ""
+POOL_NAME = "3pool"
 
 # temporary owner address
-POOL_OWNER = "0xedf2c58e16cc606da1977e79e1e69e79c54fe242"
-GAUGE_OWNER = "0xedf2c58e16cc606da1977e79e1e69e79c54fe242"
+#POOL_OWNER = "0xedf2c58e16cc606da1977e79e1e69e79c54fe242"
+#GAUGE_OWNER = "0xedf2c58e16cc606da1977e79e1e69e79c54fe242"
 
 MINTER = "0xd061D61a4d941c39E5453435B6345Dc261C2fcE0"
 
-# POOL_OWNER = "0xeCb456EA5365865EbAb8a2661B0c503410e9B347"  # PoolProxy
-# GAUGE_OWNER = "0x519AFB566c05E00cfB9af73496D00217A630e4D5"  # GaugeProxy
+POOL_OWNER = "0x9A98cB292Ac73896C79f08a64129ccEB6E28FFCf"  # PoolProxy
+GAUGE_OWNER = "0xF01c70D6BA5134bf26fc5b431703e730f727868F"  # GaugeProxy
 
 
 def _tx_params():
     return {
         "from": DEPLOYER,
         "required_confs": REQUIRED_CONFIRMATIONS,
-        "gas_price": GasNowScalingStrategy("standard", "fast"),
     }
 
 

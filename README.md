@@ -76,6 +76,14 @@ To deploy a new pool:
 
     Be sure to open a pull request that adds the deployment addresses to the pool `README.md`.
 
+## Deployment to Neon
+
+Deploy `CurveTokenV2` and `StableSwap3Pool`:
+
+```bash
+brownie run scripts/deploy_3pool.py --network neon
+```
+
 ## Audits and Security
 
 Curve smart contracts have been audited by Trail of Bits. These audit reports are made available on the [Curve website](https://www.curve.fi/audits).

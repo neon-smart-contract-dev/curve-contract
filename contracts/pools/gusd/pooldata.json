@@ -2,7 +2,7 @@
     "base_pool": "3pool",
     "pool_types": ["meta"],
     "lp_contract": "CurveTokenV2",
-    "swap_address": "0x4f062658EaAF2C1ccf8C8e36D6824CDf41167956",
+    "swap_address": "",
     "lp_token_address": "0xD2967f45c4f384DEEa880F807Be904762a3DeA07",
     "zap_address": "0x64448B78561690B70E17CBE8029a3e5c1bB7136e",
     "gauge_addresses": ["0xC5cfaDA84E902aD92DD40194f0883ad49639b023"],
