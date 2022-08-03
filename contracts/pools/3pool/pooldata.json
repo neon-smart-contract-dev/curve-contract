@@ -5,7 +5,14 @@
     "gauge_addresses": ["0xBB8f48De85cdC2040Bf3B6f093919B6009dBecFe"],
     "lp_constructor": {
         "name": "Curve.fi DAI/USDC/USDT",
-        "symbol": "3Crv"
+        "symbol": "3Crv",
+        "decimals": 18,
+        "supply": 0
+    },
+    "swap_constructor": {
+        "_A": 2000,
+        "_fee": 1000000,
+        "_admin_fee": 5000000000
     },
     "coins": [
         {

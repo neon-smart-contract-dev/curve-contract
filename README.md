@@ -60,18 +60,18 @@ To deploy a new pool:
 
 1. Ensure the `pooldata.json` for the pool you are deploying contains all the necessary fields.
 2. Edit the configuration settings within [`scripts/deploy.py`](scripts/deploy.py).
-3. Test the deployment locally against a forked mainnet.
+3. Test the deployment locally against a forked Neon Devnet.
 
     ```bash
-    brownie run deploy --network mainnet-fork -I
+    brownie run deploy --network neon-devnet-fork -I
     ```
-
+    
     When the script completes it will open a console. You should call the various getter methods on the deployed contracts to ensure the pool has been configured correctly.
 
-4. Deploy the pool to the mainnet.
+4. Deploy the pool to the Neon.
 
     ```bash
-    brownie run deploy --network mainnet
+    brownie run deploy --network neon
     ```
 
     Be sure to open a pull request that adds the deployment addresses to the pool `README.md`.
