@@ -6,7 +6,7 @@ from brownie import (
 )
 
 DEPLOYER = accounts.add(config["wallets"]["from_key"])
-POOL_OWNER = "0x9A98cB292Ac73896C79f08a64129ccEB6E28FFCf"  # PoolProxy
+POOL_OWNER = "0xA8c546358EAEE194A7B5F693AF5DB51da7125D42"  # PoolProxy
 
 def main():
     token = CurveTokenV2.deploy(
