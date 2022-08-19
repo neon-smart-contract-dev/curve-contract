@@ -55,18 +55,22 @@ def swap(
     swap_mock,
     base_swap,
     aave_lending_pool,
+    is_forked_neon
 ):
-    return _swap(
-        project,
-        alice,
-        _underlying_coins,
-        wrapped_coins,
-        pool_token,
-        pool_data,
-        swap_mock,
-        base_swap,
-        aave_lending_pool,
-    )
+    if is_forked_neon:
+        return Contract(pool_data["swap_address"])
+    else:
+        return _swap(
+            project,
+            alice,
+            _underlying_coins,
+            wrapped_coins,
+            pool_token,
+            pool_data,
+            swap_mock,
+            base_swap,
+            aave_lending_pool,
+        )
 
 
 @pytest.fixture(scope="module")

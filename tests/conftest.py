@@ -107,6 +107,10 @@ def pytest_ignore_collect(path, config):
     if path_parts[:1] == ("forked",):
         return None
 
+    # always allow forked_neon tests
+    if path_parts[:1] == ("forked_neon",):
+        return None
+
     # with the `--unitary` flag, skip any tests in an `integration` subdirectory
     if config.getoption("unitary") and "integration" in path_parts:
         return True
@@ -326,3 +330,7 @@ def project():
 @pytest.fixture(scope="session")
 def is_forked():
     yield "fork" in CONFIG.active_network["id"]
+    
+@pytest.fixture(scope="session")
+def is_forked_neon():
+    yield "fork" in CONFIG.active_network["id"] and "neon" in CONFIG.active_network["id"]

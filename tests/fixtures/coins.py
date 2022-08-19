@@ -1,5 +1,5 @@
 import pytest
-from brownie import ETH_ADDRESS, ZERO_ADDRESS, ERC20Mock, ERC20MockNoReturn
+from brownie import ETH_ADDRESS, ZERO_ADDRESS, ERC20Mock, ERC20MockNoReturn, Contract
 from brownie_tokens import MintableForkToken
 from conftest import WRAPPED_COIN_METHODS
 
@@ -20,16 +20,22 @@ def underlying_coins(_underlying_coins, _base_coins):
 
 
 @pytest.fixture(scope="module")
-def pool_token(project, alice, pool_data):
-    return _pool_token(project, alice, pool_data)
+def pool_token(project, alice, pool_data, is_forked_neon):
+    if is_forked_neon:
+        return Contract(pool_data["lp_token_address"])
+    else:
+        return _pool_token(project, alice, pool_data)
 
 
 @pytest.fixture(scope="module")
-def base_pool_token(project, charlie, base_pool_data, is_forked):
+def base_pool_token(project, charlie, base_pool_data, is_forked, is_forked_neon):
     if base_pool_data is None:
         return
     if is_forked:
-        return _MintableTestToken(base_pool_data["lp_token_address"], base_pool_data)
+        if is_forked_neon:
+            return Contract(base_pool_data["lp_token_address"])
+        else:
+            return _MintableTestToken(base_pool_data["lp_token_address"], base_pool_data)
 
     # we do some voodoo here to make the base LP tokens work like test ERC20's
     # charlie is the initial liquidity provider, he starts with the full balance
@@ -114,8 +120,8 @@ def _underlying(alice, project, pool_data, is_forked, base_pool_token):
                 coins.append(ETH_ADDRESS)
             else:
                 coins.append(
-                    _MintableTestToken(
-                        data.get("underlying_address", data.get("wrapped_address")), pool_data
+                    ERC20Mock.at(
+                        data.get("underlying_address", data.get("wrapped_address"))
                     )
                 )
     else:

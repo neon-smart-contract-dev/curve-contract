@@ -5,7 +5,7 @@ from brownie import ETH_ADDRESS
 
 
 @pytest.fixture(scope="module", autouse=True)
-def setup(mint_alice, approve_alice, mint_bob, approve_bob, set_fees):
+def setup(mint_alice, approve_alice, mint_bob, approve_bob, approve_deployer, set_fees):
     set_fees(4000000, 5000000000, include_meta=True)
 
 
@@ -20,6 +20,8 @@ def test_swap_gas(
     wrapped_coins,
     underlying_coins,
     initial_amounts,
+    is_forked_neon,
+    deployer
 ):
 
     # add liquidity balanced
@@ -45,7 +47,11 @@ def test_swap_gas(
         # retain a balance of the sent coin and start with 0 balance of receiving coin
         # this is the least gas-efficient method :)
         if wrapped_coins[send] != ETH_ADDRESS:
-            wrapped_coins[send]._mint_for_testing(bob, amount + 1, {"from": bob})
+            if is_forked_neon:
+                wrapped_coins[send].transfer(bob, amount + 1, {"from": deployer})
+            else:
+                wrapped_coins[send]._mint_for_testing(bob, amount + 1, {"from": bob})
+
         if wrapped_coins[recv] != ETH_ADDRESS:
             recv_balance = wrapped_coins[recv].balanceOf(bob)
             if recv_balance > 0:
@@ -60,7 +66,11 @@ def test_swap_gas(
         for send, recv in itertools.permutations(range(n_coins), 2):
             amount = 10 ** underlying_decimals[send]
 
-            underlying_coins[send]._mint_for_testing(bob, amount + 1, {"from": bob})
+            if is_forked_neon:
+                underlying_coins[send].transfer(bob, amount + 1, {"from": deployer})
+            else:
+                underlying_coins[send]._mint_for_testing(bob, amount + 1, {"from": bob})
+            
             recv_balance = underlying_coins[recv].balanceOf(bob)
             if recv_balance > 0:
                 underlying_coins[recv].transfer(alice, recv_balance, {"from": bob})

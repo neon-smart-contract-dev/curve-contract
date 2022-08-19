@@ -1,5 +1,9 @@
 import pytest
 
+from brownie import (
+    config,
+    Contract
+)
 
 @pytest.fixture(scope="session")
 def alice(accounts):
@@ -14,3 +18,8 @@ def bob(accounts):
 @pytest.fixture(scope="session")
 def charlie(accounts):
     yield accounts[2]
+
+
+@pytest.fixture(scope="module")
+def deployer(accounts):
+    yield accounts.add(config["wallets"]["from_key"])

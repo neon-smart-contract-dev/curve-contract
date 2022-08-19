@@ -36,6 +36,12 @@ pip install -r requirements.txt
 
 See the documentation within [`contracts`](contracts) and it's subdirectories for more detailed information on how to get started developing on Curve.
 
+### Add forked devnet Neon network to brownie
+
+```bash
+brownie networks add Development neon-devnet-fork cmd=ganache-cli host=http://127.0.0.1 fork=neon port=8545 evm_version=istanbul accounts=10 timeout=120
+```
+
 ### Running the Tests
 
 The [test suite](tests) contains common tests for all Curve pools, as well as unique per-pool tests. To run the entire suite:
@@ -47,7 +53,21 @@ brownie test
 To run tests on a specific pool:
 
 ```bash
-brownie test tests/ --pool <POOL NAME>
+brownie test tests/ --pool <POOL NAME> -I -s
+```
+
+Running tests in forked devnet Neon network for 3pool:
+
+```bash
+brownie test tests/forked/ --network neon-devnet-fork --pool 3pool -I -s
+brownie test tests/forked_neon/ --network neon-devnet-fork --pool 3pool -I -s
+```
+
+Running tests in forked devnet Neon network for HUSD metapool:
+
+```bash
+brownie test tests/forked/ --network neon-devnet-fork --pool husd -I -s
+brownie test tests/forked_neon/ --network neon-devnet-fork --pool husd -I -s
 ```
 
 Valid pool names are the names of the subdirectories within [`contracts/pools`](contracts/pools). For templates, prepend `template-` to the subdirectory names within [`contracts/pool-templates`](../contracts/pool-templates). For example, the base template is `template-base`.
@@ -78,10 +98,16 @@ To deploy a new pool:
 
 ## Deployment to Neon
 
-Deploy `CurveTokenV2` and `StableSwap3Pool`:
+Deploy `CurveTokenV2 3Crv` and `StableSwap3Pool`:
 
 ```bash
-brownie run scripts/deploy_3pool.py --network neon
+brownie run scripts/deploy_3pool.py --network neon -I
+```
+
+Deploy `CurveTokenV2 husd3CRV` and `StableSwapHUSD`:
+
+```bash
+brownie run scripts/deploy_husd.py --network neon -I
 ```
 
 ## Audits and Security

@@ -25,7 +25,7 @@ def base_amount(base_pool_data, pool_data):
     try:
         amount = pool_data["testing"]["initial_amount"]
     except KeyError:
-        amount = 1000000
+        amount = 500
     try:
         amount = min(amount, base_pool_data["testing"]["initial_amount"])
     except (KeyError, TypeError):
