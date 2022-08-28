@@ -87,8 +87,8 @@ MAX_FEE: constant(uint256) = 5 * 10 ** 9
 MAX_A: constant(uint256) = 10 ** 6
 MAX_A_CHANGE: constant(uint256) = 10
 
-ADMIN_ACTIONS_DELAY: constant(uint256) = 3 * 86400
-MIN_RAMP_TIME: constant(uint256) = 86400
+ADMIN_ACTIONS_DELAY: constant(uint256) = 0 # 3 * 86400
+MIN_RAMP_TIME: constant(uint256) = 0 # 86400
 
 coins: public(address[N_COINS])
 balances: public(uint256[N_COINS])
@@ -111,7 +111,7 @@ future_owner: public(address)
 
 is_killed: bool
 kill_deadline: uint256
-KILL_DEADLINE_DT: constant(uint256) = 2 * 30 * 86400
+KILL_DEADLINE_DT: constant(uint256) = 60 # 2 * 30 * 86400
 
 
 @external

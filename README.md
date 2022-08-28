@@ -36,6 +36,15 @@ pip install -r requirements.txt
 
 See the documentation within [`contracts`](contracts) and it's subdirectories for more detailed information on how to get started developing on Curve.
 
+### Add Neon networks to brownie
+
+```bash
+brownie networks add Neon neon host=https://proxy.devnet.neonlabs.org/solana chainid=245022926 explorer=https://neonscan.org timeout=120
+brownie networks add Neon neon_mainnet host=https://proxy.mainnet.neonlabs.org/solana chainid=245022934 explorer=https://neonscan.org timeout=120
+brownie networks add Neon neon_testnet host=https://proxy.testnet.neonlabs.org/solana chainid=245022940 explorer=https://neonscan.org timeout=120
+brownie networks add Neon neon_local host=http://localhost:9090/solana chainid=111 explorer=https://neonscan.org timeout=120
+```
+
 ### Add forked devnet Neon network to brownie
 
 ```bash
@@ -68,6 +77,12 @@ Running tests in forked devnet Neon network for HUSD metapool:
 ```bash
 brownie test tests/forked/ --network neon-devnet-fork --pool husd -I -s
 brownie test tests/forked_neon/ --network neon-devnet-fork --pool husd -I -s
+```
+
+Running tests in local neon network for 3pool:
+
+```bash
+brownie test tests_local_neon/local_neon --pool 3pool --network neon_local -I -s
 ```
 
 Valid pool names are the names of the subdirectories within [`contracts/pools`](contracts/pools). For templates, prepend `template-` to the subdirectory names within [`contracts/pool-templates`](../contracts/pool-templates). For example, the base template is `template-base`.
@@ -108,6 +123,30 @@ Deploy `CurveTokenV2 husd3CRV` and `StableSwapHUSD`:
 
 ```bash
 brownie run scripts/deploy_husd.py --network neon -I
+```
+
+## Run tests in local neon network by docker
+
+Local neon node must be running beforehand by [proxy-model.py](https://github.com/neonlabsorg/proxy-model.py).
+
+Next, we need to build the image:
+
+```bash
+sudo docker build --tag tests_local_neon:1.0.5 .
+```
+
+And run container:
+
+```bash
+sudo docker run -it --net=host tests_local_neon:1.0.5
+```
+
+or so
+
+```bash
+sudo docker run -it --net=host tests_local_neon:1.0.5 sh
+
+# ./start.sh
 ```
 
 ## Audits and Security
